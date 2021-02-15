@@ -15,7 +15,6 @@ namespace LettersCount
                 {
                     totalValue = totalValue + 1;
                 }
-                
             }
             Console.WriteLine("A in string = " + totalValue);
         }

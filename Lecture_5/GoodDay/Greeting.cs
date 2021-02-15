@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GoodDay
 {
@@ -9,11 +7,11 @@ namespace GoodDay
         public void Method()
         {
             int hourThis = DateTime.Now.Hour;
-            if(hourThis >= 9 && hourThis < 12)
+            if (hourThis >= 9 && hourThis < 12)
             {
                 Console.WriteLine(DateTime.Now + " Good morning guys!");
             }
-            else if(hourThis >= 12 && hourThis < 15)
+            else if (hourThis >= 12 && hourThis < 15)
             {
                 Console.WriteLine(DateTime.Now + " Good day guys!");
             }
@@ -26,9 +24,5 @@ namespace GoodDay
                 Console.WriteLine(DateTime.Now + " Good nigth guys!");
             }
         }
-       
-        
-        
-         
     }
 }
