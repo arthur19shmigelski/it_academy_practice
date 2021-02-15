@@ -6,7 +6,8 @@ namespace GoodDay
     {
         static void Main(string[] args)
         {
-            
+            Greeting instance = new Greeting();
+            instance.Method();
         }
     }
 }
