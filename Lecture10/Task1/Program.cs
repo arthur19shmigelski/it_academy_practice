@@ -4,69 +4,186 @@ namespace Task1
 {
     class Program
     {
+        static Motocycle StartProgram()
+        {
+            Console.Write("Input model {string}");
+            string inpModel = Console.ReadLine();
+
+            Console.Write("Input proizvoditel {string}");
+            string inpProizvoditel = Console.ReadLine();
+
+            Console.Write("Input probeg {int}");
+            int inpProbeg = int.Parse(Console.ReadLine());
+
+            Console.Write("Input vSize {int}");
+            int intvSize = int.Parse(Console.ReadLine());
+
+            Console.Write("Input power {int}");
+            int intPower = int.Parse(Console.ReadLine());
+
+            Console.Write("Input yearBirth {int}");
+            int dateBirth = int.Parse(Console.ReadLine());
+
+            Motocycle moto = new Motocycle(inpModel, inpProizvoditel, inpProbeg, intvSize, intPower, dateBirth);
+            Random random = new Random();
+            moto.ID = random.Next(1,100);
+            return moto;
+        }
         static void Main(string[] args)
-        {    
-            Console.WriteLine("Hello");
-            Console.Write("Input model -");
-            string userInpModel = Console.ReadLine();
-            string userInpManufactured = Console.ReadLine();
-            int userInputMileage = int.Parse(Console.ReadLine());
+        {
 
+            
+            Motocycle[] motoArray = new Motocycle[3];
+            motoArray[0] = Program.StartProgram();
+            motoArray[1] = Program.StartProgram();
+            motoArray[2] = Program.StartProgram();
 
-            Motorcycle moto1 = new Motorcycle();
+            foreach (var item in motoArray)
+            {
+                Console.WriteLine("Id = "+item.ID + "| Model = "+item.Model + "| Probeg = " + item.Probeg + "| Proizvoditel = " +item.Proizvoditel + "| BirthYear = " + item.BirthYear);
+            }
         }
     }
-    internal class Motorcycle
+    class Motocycle
     {
+        public Motocycle(string inpModel, string inpProizvoditel, int inpPropeg, int intvSize, int intPower,int dateBirth)
+        {
+            Model = inpModel;
+            Proizvoditel  = inpProizvoditel;
+            Probeg =  inpPropeg;
+            BirthYear = dateBirth;
+            Engine engine = new Engine(intvSize, intPower);
+        }
+
+
+        private int _id;
+
+        public int ID
+        {
+            get { return _id; }
+            //Не работает init. C# < 9.0.
+            set
+            {
+                _id = value;
+            }
+        }
+
+        private string _model;
+        public string Model
+        {
+            get { return _model; }
+            set
+            {
+                if (value == string.Empty)
+                {
+                    System.Console.WriteLine("Error in Model. Model value == string.Empty. Set new value --- unknown value");
+                    _model = "unknown value.";
+                }
+                else
+                    _model = value;
+            }
+        }
+        private string _proizvoditel;
+
+        public string Proizvoditel
+        {
+            get { return _proizvoditel; }
+            set
+            {
+                if (value == string.Empty)
+                {
+                    System.Console.WriteLine("Error in Proizvoditel. Proizvoditel value == string.Empty. Set new value --- unknown value");
+                    _proizvoditel = "unknown value.";
+                }
+
+                else
+                    _proizvoditel = value;
+            }
+        }
+        private int _birthYear;
+
+        public int BirthYear
+        {
+            get { return _birthYear; }
+            set
+            {
+                if (string.Equals(2021, value) == true)
+                {
+                    _birthYear = value;
+                }
+                else
+                {
+                    System.Console.WriteLine("Error in BirthYear. string.Equals(2021, value.ToString()) != true ");
+                    _birthYear = 2021;
+                }
+            }
+        }
+        private int _probeg;
+
+        public int Probeg
+        {
+            get { return _probeg; }
+            set
+            {
+                if (value > 100)
+                {
+                    System.Console.WriteLine("ERROR Propeg > 100. Because value % 100");
+                    _probeg = value % 100;
+                }
+                else
+                    _probeg = value;
+            }
+        }
+        private void ConfigurationToDefault()
+        {
+            ID = 0;
+            Model = string.Empty;
+            Proizvoditel = string.Empty;
+            BirthYear = 0;
+            Probeg = 0;
+        }
+
+
         class Engine
         {
+            public Engine(int vsize, int power)
+            {
+                VSIZE = vsize;
+                Power = power;
+            }
             private int _vSize;
-            private int _power;
 
-            public int vSizeProperty
+            public int VSIZE
             {
                 get { return _vSize; }
                 set
                 {
-                    if (_vSize > 125 && _vSize < 3200)
-                    { _vSize = value; }
-                    else { Console.WriteLine("Not correct. Vsize only > 125 and < 3200"); }
+                    if (value >= 125 && value < 3200)
+                        _vSize = value;
+                    else
+                    {
+                        Console.WriteLine("ERROR VSIZE. value < 125 && value > 3200");
+                        _vSize = 125;
+                    }
                 }
             }
-            public int PowerProperty
+
+            private int _power;
+            public int Power
             {
                 get { return _power; }
                 set
                 {
-                    if (_power > 50 && _power < 300)
-                    { _power = value; }
-                    else { Console.WriteLine("Not correct. Vsize only > 125 and < 3200"); }
+                    if (value >= 50 && value < 300)
+                        _power = value;
+                    else
+                    {
+                        Console.WriteLine("ERROR in Power. value < 50 && value > 300 ");
+                        _power = 50;
+                    }
                 }
             }
 
         }
-        public Motorcycle(int guid, string model, string manufacturer, int mileage)
-        {
-            guid = GUID;
-            model = Model;
-            manufacturer = Manufacturer;
-            mileage = Mileage;
-            BirthYear = DateTime.Now.Year;
-        }
-        public void ConfigurationToDefault(Motorcycle motorcycle)
-        {
-            motorcycle.GUID = 0;
-            motorcycle.Model = "UNKNOWN";
-            motorcycle.Manufacturer = "UNKNOWN";
-            motorcycle.BirthYear = 0;
-            motorcycle.Mileage = 0;
-        }
-        public int GUID { get; private set; }
-        private string Model { get; set; }
-        private string Manufacturer { get; set; }
-        private int BirthYear { get; set; }
-        private int Mileage;
-
-
     }
 }
