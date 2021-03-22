@@ -6,24 +6,29 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            UniqueItem uniq1 = new UniqueItem(1);
-            UniqueItem uniq2 = new UniqueItem(5);
-            UniqueItem uniq3 = new UniqueItem(10);
-            UniqueItem uniq4 = new UniqueItem(15);
-            UniqueItem.DisplayId();
         }
     }
     class UniqueItem
     {
-        private static int Id = 0;
-        public UniqueItem(int id)
+        private int id;
+        public int Id
         {
-            Id = id;
-            Id++;
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
         }
-        public static void DisplayId()
+        public UniqueItem()
         {
-            Console.WriteLine($"Create {Id} - instance.");
+            id++;
+        }
+        public static void DisplayId(UniqueItem item)
+        {
+            Console.WriteLine($"Create {item.Id} - instance.");
         }
     }
 }
